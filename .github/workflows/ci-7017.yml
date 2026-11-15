@@ -1,0 +1,18 @@
+name: ci-7017
+on:
+  push:
+    branches: ['ci/7017-mock-doc-cssText']
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: ./.github/workflows/actions/get-core-dependencies
+      - name: mock-doc unit tests
+        run: npm run test.jest -- src/mock-doc
+      - name: eslint touched files
+        run: npx eslint src/mock-doc/css-style-declaration.ts src/mock-doc/test/css-style-declaration.spec.ts
+      - name: prettier touched files
+        run: npx prettier --check src/mock-doc/css-style-declaration.ts src/mock-doc/test/css-style-declaration.spec.ts
+      - name: tsc
+        run: npx tsc --noEmit -p . 2>&1 | tail -20
