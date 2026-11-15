@@ -8,6 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       - uses: ./.github/workflows/actions/get-core-dependencies
+      - name: build
+        run: npm run build
       - name: mock-doc unit tests
         run: npm run test.jest -- src/mock-doc
       - name: eslint touched files
